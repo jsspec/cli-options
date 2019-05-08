@@ -1,0 +1,32 @@
+{
+  "name": "@jsspec/cli-options",
+  "version": "0.0.1",
+  "description": "Command line option parser",
+  "main": "lib/options.js",
+  "scripts": {
+    "cover": "NODE_V8_COVERAGE=coverage mocha --recursive -r chai/register-expect",
+    "test": "mocha --recursive -r chai/register-expect"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSSpec/cli-options.git"
+  },
+  "keywords": [
+    "cli",
+    "arguments",
+    "args",
+    "options",
+    "jsspec"
+  ],
+  "author": "HookyQR",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JSSpec/cli-options/issues"
+  },
+  "homepage": "https://github.com/JSSpec/cli-options#readme",
+  "devDependencies": {
+    "mocha": "~5.2.0",
+    "chai": "4.2.0"
+  },
+  "files": ["lib/"]
+}
