@@ -1,6 +1,6 @@
 # @jsspec/cli-options
-[![Build Status](https://travis-ci.org/jsspec/cli-options.svg?branch=master)](https://travis-ci.org/jsspec/cli-options)
-[![Build status](https://ci.appveyor.com/api/projects/status/as9xrd9ytic7brrl?svg=true)](https://ci.appveyor.com/project/HookyQR/cli-options)
+[![Travis (.org) branch](https://img.shields.io/travis/jsspec/cli-options/master.svg?logo=travis&style=for-the-badge)](https://travis-ci.org/jsspec/cli-options)
+[![AppVeyor](https://img.shields.io/appveyor/ci/HookyQR/cli-options/master.svg?logo=appveyor&style=for-the-badge)](https://ci.appveyor.com/project/HookyQR/cli-options)
 
 Command line options parser for jsspec.
 
