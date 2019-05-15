@@ -1,6 +1,6 @@
 {
   "name": "@jsspec/cli-options",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Command line option parser",
   "main": "lib/options.js",
   "scripts": {
