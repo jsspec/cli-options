@@ -1,3 +1,5 @@
+'use strict';
+
 const Option = require('../lib/options');
 
 describe('Option', () => {
@@ -9,9 +11,9 @@ describe('Option', () => {
   };
 
   it('picks up a simple arg set correctly', () => {
-    let args = 'node ./index.js -r ./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
+    let args = '-r ./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
     let option = new Option(args, options, 'files');
-    console.log(option.settings);
+
     expect(option.settings).to.deep.include({
       random: true,
       require: ['./some/file', './some/otherFile'],
@@ -21,8 +23,9 @@ describe('Option', () => {
   });
 
   it('picks up a both parts of an arrray correctly', () => {
-    let args = 'node ./index.js --require=./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
+    let args = '--require=./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
     let option = new Option(args, options, 'files');
+
     expect(option.settings).to.deep.include({
       random: true,
       require: ['./some/file', './some/otherFile'],
@@ -32,8 +35,9 @@ describe('Option', () => {
   });
 
   it('fails on an unknown and toggles flags', () => {
-    let args = 'node ./index.js --youDontKnowMe -RR'.split(' ');
+    let args = '--youDontKnowMe -RR'.split(' ');
     let option = new Option(args, options, 'files');
+
     expect(option.settings).to.deep.include({ random: false });
     expect(option.errors).to.have.length(1);
     expect(option.errors[0]).to.match(/unknown argument 'youDontKnowMe'/);

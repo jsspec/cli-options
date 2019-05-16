@@ -1,3 +1,5 @@
+'use strict';
+
 const Parser = require('../lib/parser');
 
 describe('Parser', () => {
