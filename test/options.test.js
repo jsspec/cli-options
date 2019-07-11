@@ -3,6 +3,8 @@
 const Option = require('../lib/options');
 
 describe('Option', () => {
+  subject('option', () => new Option(args, options, 'files'));
+
   let options = {
     random: { alias: 'R', type: Boolean, required: false, default: true },
     require: { alias: 'r', type: Array, required: false, default: [] },
@@ -10,63 +12,69 @@ describe('Option', () => {
     files: { type: Array, required: false, default: [] }
   };
 
-  it('picks up a simple arg set correctly', () => {
-    let args = '-r ./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
-    let option = new Option(args, options, 'files');
+  context('with a simple arg set', () => {
+    set('args', '-r ./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' '));
 
-    expect(option.settings).to.deep.include({
-      random: true,
-      require: ['./some/file', './some/otherFile'],
-      format: 'd',
-      files: ['run/this/test', 'and/this/one']
+    it('picks up a simple arg set correctly', () => {
+      expect(option.settings).to.deep.include({
+        random: true,
+        require: ['./some/file', './some/otherFile'],
+        format: 'd',
+        files: ['run/this/test', 'and/this/one']
+      });
     });
   });
 
-  it('picks up a both parts of an array correctly', () => {
-    let args = '--require=./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
-    let option = new Option(args, options, 'files');
+  context('with multiple values to an array setting', () => {
+    set('args', '--require=./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' '));
 
-    expect(option.settings).to.deep.include({
-      random: true,
-      require: ['./some/file', './some/otherFile'],
-      format: 'd',
-      files: ['run/this/test', 'and/this/one']
+    it('picks up a both parts of an array correctly', () => {
+      expect(option.settings).to.deep.include({
+        random: true,
+        require: ['./some/file', './some/otherFile'],
+        format: 'd',
+        files: ['run/this/test', 'and/this/one']
+      });
     });
   });
 
-  it('bails from an array setting with `--`', () => {
-    let args = '--require=./some/file ./some/otherFile -- run/this/test and/this/one'.split(' ');
-    let option = new Option(args, options, 'files');
+  describe('bailing from an array setting', () => {
+    context('using `--`', () => {
+      set('args', '--require=./some/file ./some/otherFile -- run/this/test and/this/one'.split(' '));
 
-    console.log(option.settings);
-    expect(option.settings).to.deep.include({
-      random: true,
-      require: ['./some/file', './some/otherFile'],
-      files: ['run/this/test', 'and/this/one']
+      it('bails from an array setting with `--`', () => {
+        expect(option.settings).to.deep.include({
+          random: true,
+          require: ['./some/file', './some/otherFile'],
+          files: ['run/this/test', 'and/this/one']
+        });
+
+        expect(options.errors).to.be.undefined;
+      });
     });
 
-    expect(options.errors).to.be.undefined;
-  });
+    context('using the full default flag', () => {
+      set('args', '--require=./some/file ./some/otherFile --files run/this/test and/this/one'.split(' '));
+      it('bails from an array setting with the full default flag', () => {
 
-  it('bails from an array setting with the full default flag', () => {
-    let args = '--require=./some/file ./some/otherFile --files run/this/test and/this/one'.split(' ');
-    let option = new Option(args, options, 'files');
+        expect(option.settings).to.deep.include({
+          random: true,
+          require: ['./some/file', './some/otherFile'],
+          files: ['run/this/test', 'and/this/one']
+        });
 
-    expect(option.settings).to.deep.include({
-      random: true,
-      require: ['./some/file', './some/otherFile'],
-      files: ['run/this/test', 'and/this/one']
+        expect(options.errors).to.be.undefined;
+      });
     });
-
-    expect(options.errors).to.be.undefined;
   });
 
-  it('fails on an unknown and toggles flags', () => {
-    let args = '--youDontKnowMe -RR'.split(' ');
-    let option = new Option(args, options, 'files');
+  context('unknown flags', () => {
+    set('args', '--youDontKnowMe -RR'.split(' '));
 
-    expect(option.settings).to.deep.include({ random: false });
-    expect(option.errors).to.have.length(1);
-    expect(option.errors[0]).to.match(/unknown argument 'youDontKnowMe'/);
+    it('fails on an unknown and toggles flags', () => {
+      expect(option.settings).to.deep.include({ random: false });
+      expect(option.errors).to.have.length(1);
+      expect(option.errors[0]).to.match(/unknown argument 'youDontKnowMe'/);
+    });
   });
 });
