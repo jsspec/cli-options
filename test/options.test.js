@@ -22,7 +22,7 @@ describe('Option', () => {
     });
   });
 
-  it('picks up a both parts of an arrray correctly', () => {
+  it('picks up a both parts of an array correctly', () => {
     let args = '--require=./some/file ./some/otherFile -fd run/this/test and/this/one'.split(' ');
     let option = new Option(args, options, 'files');
 
@@ -32,6 +32,33 @@ describe('Option', () => {
       format: 'd',
       files: ['run/this/test', 'and/this/one']
     });
+  });
+
+  it('bails from an array setting with `--`', () => {
+    let args = '--require=./some/file ./some/otherFile -- run/this/test and/this/one'.split(' ');
+    let option = new Option(args, options, 'files');
+
+    console.log(option.settings);
+    expect(option.settings).to.deep.include({
+      random: true,
+      require: ['./some/file', './some/otherFile'],
+      files: ['run/this/test', 'and/this/one']
+    });
+
+    expect(options.errors).to.be.undefined;
+  });
+
+  it('bails from an array setting with the full default flag', () => {
+    let args = '--require=./some/file ./some/otherFile --files run/this/test and/this/one'.split(' ');
+    let option = new Option(args, options, 'files');
+
+    expect(option.settings).to.deep.include({
+      random: true,
+      require: ['./some/file', './some/otherFile'],
+      files: ['run/this/test', 'and/this/one']
+    });
+
+    expect(options.errors).to.be.undefined;
   });
 
   it('fails on an unknown and toggles flags', () => {
