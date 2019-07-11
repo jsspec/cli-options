@@ -91,6 +91,32 @@ describe('Parser', () => {
           expect(parser.errors).to.have.length(0);
           expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: true, longOnly: 'LONG', _: [] });
         });
+
+        describe('multi flags', () => {
+          describe('short form', () => {
+            set('args', ['-ff']);
+            it('toggles the flag', () => {
+              expect(parser.errors).to.have.length(0);
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+            });
+          });
+
+          describe('long form', () => {
+            set('args', ['--isFlag', '--isFlag']);
+            it('toggles the flag', () => {
+              expect(parser.errors).to.have.length(0);
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+            });
+          });
+
+          describe('long and short form', () => {
+            set('args', ['--isFlag', '-f']);
+            it('toggles the flag', () => {
+              expect(parser.errors).to.have.length(0);
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+            });
+          });
+        });
       });
 
       describe('multiple options', () => {

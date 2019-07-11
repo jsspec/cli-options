@@ -42,7 +42,7 @@ describe('Option', () => {
     context('using `--`', () => {
       set('args', '--require=./some/file ./some/otherFile -- run/this/test and/this/one'.split(' '));
 
-      it('bails from an array setting with `--`', () => {
+      it('bails', () => {
         expect(option.settings).to.deep.include({
           random: true,
           require: ['./some/file', './some/otherFile'],
@@ -55,7 +55,7 @@ describe('Option', () => {
 
     context('using the full default flag', () => {
       set('args', '--require=./some/file ./some/otherFile --files run/this/test and/this/one'.split(' '));
-      it('bails from an array setting with the full default flag', () => {
+      it('bails', () => {
 
         expect(option.settings).to.deep.include({
           random: true,
@@ -69,12 +69,15 @@ describe('Option', () => {
   });
 
   context('unknown flags', () => {
-    set('args', '--youDontKnowMe -RR'.split(' '));
+    set('args', '--youDontKnowMe -f dot'.split(' '));
 
     it('fails on an unknown and toggles flags', () => {
-      expect(option.settings).to.deep.include({ random: false });
       expect(option.errors).to.have.length(1);
       expect(option.errors[0]).to.match(/unknown argument 'youDontKnowMe'/);
+    });
+
+    it('continues to process', () => {
+      expect(option.settings).to.deep.include({ format: 'dot' });
     });
   });
 });
