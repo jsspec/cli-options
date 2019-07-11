@@ -4,7 +4,7 @@
   "description": "Command line option parser",
   "main": "lib/options.js",
   "scripts": {
-    "test": "c8 jsspec -r chai/register-expect -- test/options.test.js test/parser.test.js"
+    "test": "c8 jsspec -r chai/register-expect -- spec/options.spec.js spec/parser.spec.js"
   },
   "repository": {
     "type": "git",
