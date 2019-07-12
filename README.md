@@ -6,7 +6,7 @@ Command line options parser for jsspec.
 
 Example:
 ```javascript
-const CLIOptions = requrie('@jsspec/cli-options')
+const CLIOptions = require('@jsspec/cli-options')
 
 options = {
   random: { alias: 'R', type: Boolean, required: false, default: true },
