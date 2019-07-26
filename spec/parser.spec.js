@@ -39,7 +39,7 @@ describe('Parser', () => {
 
   describe('#parse', () => {
     set('parser', () => new Parser({
-      _: { type: Array },
+      _: { type: Array, default: ['none were passed'] },
       hasShort: { alias: 'h', type: Array, default: ['SHORT'] },
       isFlag: { type: Boolean, alias: 'f' },
       longOnly: { type: String, default: 'LONG' }
@@ -87,9 +87,9 @@ describe('Parser', () => {
       describe('boolean options', () => {
         set('args', ['--isFlag']);
 
-        it('processes long form', () => {
+        it('processes long form, gets default for catch all', () => {
           expect(parser.errors).to.have.length(0);
-          expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: true, longOnly: 'LONG', _: [] });
+          expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: true, longOnly: 'LONG', _: ['none were passed'] });
         });
 
         describe('multi flags', () => {
@@ -97,7 +97,7 @@ describe('Parser', () => {
             set('args', ['-ff']);
             it('toggles the flag', () => {
               expect(parser.errors).to.have.length(0);
-              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: ['none were passed'] });
             });
           });
 
@@ -105,7 +105,7 @@ describe('Parser', () => {
             set('args', ['--isFlag', '--isFlag']);
             it('toggles the flag', () => {
               expect(parser.errors).to.have.length(0);
-              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: ['none were passed'] });
             });
           });
 
@@ -113,7 +113,7 @@ describe('Parser', () => {
             set('args', ['--isFlag', '-f']);
             it('toggles the flag', () => {
               expect(parser.errors).to.have.length(0);
-              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: [] });
+              expect(parseResult).to.deep.include({ hasShort: ['SHORT'], isFlag: false, longOnly: 'LONG', _: ['none were passed'] });
             });
           });
         });
