@@ -1,6 +1,6 @@
 {
   "name": "@jsspec/cli-options",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Command line option parser",
   "main": "lib/options.js",
   "scripts": {
@@ -25,8 +25,8 @@
   "homepage": "https://github.com/JSSpec/cli-options#readme",
   "devDependencies": {
     "@jsspec/jsspec": "*",
-    "chai": "4.2.0",
-    "c8": "^4.1.5"
+    "chai": "^4.2.0",
+    "c8": "^7.1.0"
   },
   "files": [
     "lib/"
