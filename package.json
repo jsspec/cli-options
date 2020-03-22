@@ -4,7 +4,7 @@
   "description": "Command line option parser",
   "main": "lib/options.js",
   "scripts": {
-    "test": "c8 jsspec -r chai/register-expect -- spec/options.spec.js spec/parser.spec.js"
+    "test": "c8 jsspec -r chai/register-expect"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/JSSpec/cli-options#readme",
   "devDependencies": {
-    "@jsspec/jsspec": "*",
+    "@jsspec/jsspec": ">=0.1.4",
     "chai": "^4.2.0",
     "c8": "^7.1.0"
   },
