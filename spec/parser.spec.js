@@ -57,7 +57,7 @@ describe('Parser', () => {
         });
       });
 
-      context('after `-`', () => {
+      context('after `--`', () => {
         set('args', ['-h', 'test', '--', 'test2']);
 
         it('uses catch all', () => {
@@ -138,8 +138,10 @@ describe('Parser', () => {
       });
     });
 
-    context('incorrect use', () => {
-      subject('errors', () => { parseResult; return parser.errors; });
+    describe('incorrect use', () => {
+      subject('errors', () => parser.errors);
+
+      beforeEach(() => parseResult);
 
       describe('unknown options', () => {
         set('args', ['-X', '--what', '--another=bad']);
