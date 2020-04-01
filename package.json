@@ -5,7 +5,7 @@
   "main": "lib/options.js",
   "scripts": {
     "test": "jsspec -r chai/register-expect",
-    "coverage": "c8 npm test"
+    "coverage": "c8 --clean --all npm test"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/JSSpec/cli-options#readme",
   "devDependencies": {
-    "@jsspec/jsspec": "^0.2.0",
+    "@jsspec/jsspec": ">=0.2.1",
     "c8": "^7.1.0",
     "chai": "^4.2.0"
   },
